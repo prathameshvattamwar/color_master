@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Master Pro</title> 
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Simple Gear Icon SVG -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>">
+</head>
+<body data-theme="light"> 
+
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1>Color Master Pro</h1>
+                <button id="settings-icon" class="icon-button" aria-label="Open Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V15a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+            <div class="game-stats">
+                <span>Round: <span id="round-number">1</span></span>
+                <span>Score: <span id="last-score">-</span>%</span>
+                <span class="reveal-stats">
+                    Reveals: <span id="reveal-count">5</span>
+                    <span class="tooltip" id="reveal-info-tooltip">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span class="tooltip-text">Earn reveals by scoring 95% (Medium) or higher!</span>
+                    </span>
+                </span>
+            </div>
+        </header>
+
+        <main>
+            <div class="color-display">
+                 <div class="color-box target-color-container">
+                    <h2>Target</h2>
+                    <div id="target-color-box" class="swatch"></div>
+                    <div id="target-values-rgb" class="values rgb-values">(???, ???, ???)</div>
+                    <div id="target-values-hex" class="values hex-values">#??????</div>
+                </div>
+                <div class="color-box your-match-container">
+                    <h2>Your Match</h2>
+                    <div id="your-match-box" class="swatch"></div>
+                     <div id="your-values-rgb" class="values rgb-values">(128, 128, 128)</div>
+                     <div id="your-values-hex" class="values hex-values">#808080</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="slider-group">
+                    <label for="red-slider" class="color-label red">R</label>
+                    <input type="range" id="red-slider" min="0" max="255" value="128" class="slider red">
+                    <span id="red-value" class="slider-value">128</span>
+                </div>
+                <div class="slider-group">
+                    <label for="green-slider" class="color-label green">G</label>
+                    <input type="range" id="green-slider" min="0" max="255" value="128" class="slider green">
+                    <span id="green-value" class="slider-value">128</span>
+                </div>
+                <div class="slider-group">
+                    <label for="blue-slider" class="color-label blue">B</label>
+                    <input type="range" id="blue-slider" min="0" max="255" value="128" class="slider blue">
+                    <span id="blue-value" class="slider-value">128</span>
+                </div>
+            </div>
+
+            <div id="feedback" class="feedback-area">
+                Adjust sliders & submit!
+            </div>
+
+            <div class="actions">
+                <button id="submit-button" class="btn btn-primary">Check Match</button>
+                <button id="reveal-button" class="btn btn-secondary" data-revealed-this-round="false">
+                    Reveal (<span id="reveal-button-count">5</span>)
+                </button>
+                <button id="next-button" class="btn btn-secondary">Next Color</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Color Master Pro - Match & Learn</p>
+        </footer>
+    </div>
+
+    <!-- Score Feedback Popup -->
+    <div id="score-popup" class="popup score-popup" aria-hidden="true">
+        <div class="popup-content">
+            <button class="close-popup icon-button" aria-label="Close popup">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div id="popup-icon" class="popup-icon"></div>
+            <h3 id="popup-title">Result</h3>
+            <p id="popup-message">Your score message here.</p>
+            <p id="popup-bonus" class="popup-bonus-message"></p>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="popup settings-modal" aria-hidden="true" role="dialog" aria-labelledby="settings-title">
+        <div class="popup-content">
+             <button id="close-settings" class="close-popup icon-button" aria-label="Close settings">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+             </button>
+            <h2 id="settings-title">Settings</h2>
+
+            <div class="setting-section">
+                <h3>Theme</h3>
+                <div class="radio-group">
+                    <label><input type="radio" name="theme" value="light"> Light</label>
+                    <label><input type="radio" name="theme" value="dark"> Dark</label>
+                </div>
+            </div>
+
+            <div class="setting-section">
+                <h3>Difficulty</h3>
+                <div class="radio-group">
+                    <label><input type="radio" name="difficulty" value="easy"> Easy</label>
+                    <label><input type="radio" name="difficulty" value="medium"> Medium</label>
+                    <label><input type="radio" name="difficulty" value="hard"> Hard</label>
+                </div>
+                 <p class="setting-info">Affects scoring thresholds for feedback and earning reveals.</p>
+            </div>
+
+             <div class="setting-section">
+                <h3>Color Format</h3>
+                <div class="radio-group">
+                    <label><input type="radio" name="colorFormat" value="rgb"> RGB</label>
+                    <label><input type="radio" name="colorFormat" value="hex"> HEX</label>
+                    <label><input type="radio" name="colorFormat" value="both"> Both</label>
+                </div>
+            </div>
+
+            <div class="setting-section">
+                <h3>How to Play & Rules</h3>
+                <p>Adjust the R, G, B sliders to match 'Your Match' color to the 'Target' color.</p>
+                <p>Click 'Check Match' to see your score (%).</p>
+                <p>Use 'Reveal' (if available) to see the target values. Reveals start at 5.</p>
+                <p>Earn more Reveals by getting a high score (e.g., 95%+ on Medium, 98%+ on Hard, 90%+ on Easy).</p>
+                 <p>Click 'Next Color' for a new challenge.</p>
+            </div>
+
+            <div class="setting-section settings-actions">
+                 <button id="reset-game-button" class="btn btn-danger btn-small">Reset Game Stats</button>
+                 <button id="apply-settings-button" class="btn btn-primary btn-small">Apply & Close</button>
+            </div>
+
+        </div>
+    </div>
+    <div id="popup-overlay" class="popup-overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
