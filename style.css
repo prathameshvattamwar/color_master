@@ -23,6 +23,7 @@
   --error-text: #721c24;
   --info-bg: #cce5ff;
   --info-text: #004085;
+  --star-color: #f39c12; /* Color for star icon */
 
   --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.05);
   --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
@@ -38,6 +39,7 @@
   --font-size-xl: 1.8rem;
 
   --transition-speed: 0.3s;
+  --transition-speed-fast: 0.2s; /* Faster transition for accordion */
 }
 
 body[data-theme="dark"] {
@@ -46,10 +48,10 @@ body[data-theme="dark"] {
   --text-color: #ecf0f1;
   --text-light: #bdc3c7;
   --text-heading: #ffffff;
-  --secondary-color: #566573; /* Darker secondary */
+  --secondary-color: #566573;
   --secondary-dark: #43525f;
   --border-color: #495a6d;
-  --success-bg: #16a085; /* Adjust feedback colors for dark theme */
+  --success-bg: #16a085;
   --success-text: #ffffff;
   --warning-bg: #f39c12;
   --warning-text: #ffffff;
@@ -57,6 +59,7 @@ body[data-theme="dark"] {
   --error-text: #ffffff;
   --info-bg: #2980b9;
   --info-text: #ffffff;
+  --star-color: #f1c40f; /* Keep star color consistent */
 
   --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
   --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.3);
@@ -107,15 +110,14 @@ header h1 {
   color: var(--text-heading);
   font-weight: 600;
   font-size: var(--font-size-xl);
-  text-align: left; /* Align title left */
+  text-align: left;
 }
 .icon-button {
-  /* Style for gear and close buttons */
   background: none;
   border: none;
   color: var(--text-light);
   cursor: pointer;
-  padding: 5px;
+  padding: 8px; /* Slightly larger tap area */
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -123,13 +125,16 @@ header h1 {
   transition: background-color var(--transition-speed) ease,
     color var(--transition-speed) ease;
 }
+.icon-button i {
+  font-size: 1.2rem; /* Adjust icon size */
+  line-height: 1;
+}
 .icon-button:hover {
   background-color: rgba(127, 140, 141, 0.1);
   color: var(--primary-color);
 }
-.icon-button svg {
-  width: 22px;
-  height: 22px;
+body[data-theme="dark"] .icon-button:hover {
+  background-color: rgba(236, 240, 241, 0.1);
 }
 
 .game-stats {
@@ -137,12 +142,11 @@ header h1 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px 25px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   font-size: var(--font-size-small);
   color: var(--text-light);
 }
 .game-stats > span {
-  /* Target direct children spans */
   background-color: rgba(127, 140, 141, 0.08);
   padding: 6px 12px;
   border-radius: var(--border-radius-large);
@@ -152,14 +156,11 @@ body[data-theme="dark"] .game-stats > span {
   background-color: rgba(236, 240, 241, 0.1);
 }
 .game-stats span span {
-  /* Inner spans for values */
   background-color: transparent;
   padding: 0;
   font-weight: 600;
   color: var(--primary-color);
 }
-
-/* Tooltip for Reveal Info */
 .reveal-stats {
   position: relative;
   display: inline-flex;
@@ -169,11 +170,12 @@ body[data-theme="dark"] .game-stats > span {
 .tooltip {
   cursor: help;
 }
-.tooltip svg {
+.tooltip i {
   color: var(--text-light);
   transition: color var(--transition-speed) ease;
+  margin-left: 2px;
 }
-.tooltip:hover svg {
+.tooltip:hover i {
   color: var(--primary-color);
 }
 .tooltip .tooltip-text {
@@ -186,9 +188,9 @@ body[data-theme="dark"] .game-stats > span {
   padding: 8px;
   position: absolute;
   z-index: 10;
-  bottom: 130%; /* Position above the icon */
+  bottom: 140%; /* Adjusted position */
   left: 50%;
-  margin-left: -90px; /* Center the tooltip */
+  margin-left: -90px;
   opacity: 0;
   transition: opacity 0.3s, visibility 0.3s;
   font-size: 0.8rem;
@@ -198,6 +200,31 @@ body[data-theme="dark"] .game-stats > span {
 .tooltip:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.score-history {
+  margin-bottom: 25px;
+  font-size: var(--font-size-small);
+  color: var(--text-light);
+  text-align: center;
+  padding-top: 5px;
+}
+.score-history span:first-child {
+  font-weight: 500;
+  margin-right: 8px;
+}
+#score-history-display {
+  font-weight: 600;
+  color: var(--primary-color);
+  background-color: rgba(127, 140, 141, 0.08);
+  padding: 3px 8px;
+  border-radius: var(--border-radius-small);
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+}
+body[data-theme="dark"] #score-history-display {
+  background-color: rgba(236, 240, 241, 0.1);
 }
 
 /* --- Color Display --- */
@@ -230,15 +257,14 @@ body[data-theme="dark"] .game-stats > span {
 }
 #target-color-box {
   background-color: #bdc3c7;
-} /* Placeholder */
+}
 #your-match-box {
   background-color: rgb(128, 128, 128);
 }
-
 .values {
   font-size: var(--font-size-small);
   color: var(--text-light);
-  font-weight: 400; /* Increased weight slightly */
+  font-weight: 400;
   min-height: 1.2em;
   transition: opacity var(--transition-speed) ease;
   margin-top: 4px;
@@ -254,8 +280,6 @@ body[data-theme="dark"] .game-stats > span {
 #target-values-hex.visible {
   opacity: 1;
 }
-
-/* Hide formats based on settings */
 .values.rgb-values.hidden,
 .values.hex-values.hidden {
   display: none;
@@ -272,7 +296,6 @@ body[data-theme="dark"] .game-stats > span {
   gap: 12px;
 }
 .color-label {
-  /* Compact label */
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -293,7 +316,6 @@ body[data-theme="dark"] .game-stats > span {
 .color-label.blue {
   background-color: #3498db;
 }
-
 .slider {
   flex-grow: 1;
   -webkit-appearance: none;
@@ -352,7 +374,6 @@ body[data-theme="dark"] .game-stats > span {
 .slider.blue::-moz-range-thumb {
   background: #3498db;
 }
-
 .slider-value {
   font-weight: 600;
   min-width: 30px;
@@ -407,10 +428,10 @@ body[data-theme="dark"] .game-stats > span {
   border-radius: var(--border-radius-large);
   cursor: pointer;
   font-size: var(--font-size-medium);
-  font-weight: 500; /* Medium weight */
+  font-weight: 500;
   transition: all var(--transition-speed) ease;
   min-width: 130px;
-  text-transform: capitalize; /* Nicer button text */
+  text-transform: capitalize;
 }
 .btn-primary {
   background-color: var(--primary-color);
@@ -487,9 +508,9 @@ body[data-theme="dark"] .game-stats > span {
     visibility var(--transition-speed) ease,
     transform var(--transition-speed) ease;
   width: 90%;
-  max-width: 500px; /* Default max width for settings */
+  max-width: 500px;
   max-height: 90vh;
-  overflow-y: auto; /* Scroll if needed */
+  overflow-y: auto;
 }
 .popup.active {
   opacity: 1;
@@ -500,7 +521,6 @@ body[data-theme="dark"] .game-stats > span {
   opacity: 1;
   visibility: visible;
 }
-
 .popup-content {
   padding: 25px 30px;
   position: relative;
@@ -513,17 +533,19 @@ body[data-theme="dark"] .game-stats > span {
 
 /* Score Popup Specifics */
 .score-popup {
-  max-width: 350px;
+  max-width: 380px; /* Slightly wider */
   text-align: center;
 }
 .popup-icon {
   font-size: 3rem;
   margin-bottom: 15px;
 }
-/* Add specific icons later via JS */
 .popup-icon .icon-perfect {
   color: var(--success-color);
 }
+.popup-icon .icon-star {
+  color: var(--star-color);
+} /* Star color */
 .popup-icon .icon-good {
   color: var(--warning-color);
 }
@@ -542,12 +564,19 @@ body[data-theme="dark"] .game-stats > span {
 #popup-message {
   font-size: var(--font-size-medium);
   color: var(--text-color);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 #popup-bonus {
   font-size: var(--font-size-small);
   color: var(--success-color);
   font-weight: 600;
+  margin-bottom: 20px;
+  display: block;
+  min-height: 1.2em; /* Reserve space */
+}
+#popup-next-button {
+  margin-top: 10px;
+  width: 80%; /* Make button prominent */
 }
 
 /* Settings Modal Specifics */
@@ -562,7 +591,7 @@ body[data-theme="dark"] .game-stats > span {
   text-align: center;
 }
 .setting-section {
-  margin-bottom: 25px;
+  margin-bottom: 20px; /* Reduced bottom margin */
   text-align: left;
 }
 .setting-section h3 {
@@ -583,7 +612,7 @@ body[data-theme="dark"] .game-stats > span {
 .radio-group input[type="radio"] {
   margin-right: 5px;
   accent-color: var(--primary-color);
-} /* Style radio button */
+}
 .setting-info {
   font-size: var(--font-size-small);
   color: var(--text-light);
@@ -604,6 +633,62 @@ body[data-theme="dark"] .game-stats > span {
   border-top: 1px solid var(--border-color);
 }
 
+/* START: Accordion Styles */
+.accordion-item {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 15px; /* Space below accordion */
+}
+.accordion-item:last-child {
+  border-bottom: none; /* No border for the last item if needed */
+  margin-bottom: 25px; /* Restore original section margin */
+}
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 10px; /* Match h3 padding */
+  margin-bottom: 0; /* Remove margin from h3 */
+  border-bottom: none; /* Remove default h3 border */
+  font-size: 1.05rem;
+  color: var(--text-heading);
+  font-weight: 500;
+  transition: color var(--transition-speed-fast) ease;
+}
+.accordion-header:hover {
+  color: var(--primary-color);
+}
+.accordion-icon {
+  font-size: 0.9em;
+  transition: transform var(--transition-speed-fast) ease;
+  color: var(--text-light);
+}
+.accordion-item.active .accordion-icon {
+  transform: rotate(180deg);
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height var(--transition-speed) ease-out,
+    opacity var(--transition-speed-fast) ease-in-out,
+    padding var(--transition-speed-fast) ease;
+  padding: 0 5px; /* Initial padding left/right */
+}
+.accordion-item.active .accordion-content {
+  max-height: 500px; /* Adjust if rules are very long */
+  opacity: 1;
+  padding: 10px 5px 15px 5px; /* Top, R/L, Bottom padding when open */
+}
+.accordion-content p {
+  /* Style paragraphs within accordion */
+  font-size: var(--font-size-small);
+  color: var(--text-color);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+/* END: Accordion Styles */
+
 /* --- Footer --- */
 footer {
   margin-top: 30px;
@@ -622,7 +707,11 @@ footer {
   .game-stats {
     gap: 10px 15px;
     font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+  .score-history {
     margin-bottom: 20px;
+    font-size: 0.8rem;
   }
   .color-display {
     flex-direction: column;
@@ -652,7 +741,7 @@ footer {
   }
   .popup {
     width: 95%;
-  } /* Make popups slightly wider on mobile */
+  }
   .popup-content {
     padding: 20px;
   }
@@ -662,6 +751,9 @@ footer {
     align-items: stretch;
   }
   .settings-actions .btn {
+    width: 100%;
+  }
+  #popup-next-button {
     width: 100%;
   }
 }
@@ -676,9 +768,12 @@ footer {
   .game-stats {
     font-size: 0.75rem;
   }
+  .score-history {
+    font-size: 0.75rem;
+  }
   .slider-group {
     flex-wrap: wrap;
-  } /* Allow slider value to wrap */
+  }
   .color-label {
     width: 22px;
     height: 22px;
@@ -699,9 +794,9 @@ footer {
     flex-direction: column;
     align-items: stretch;
   }
-  .btn {
+  .actions .btn {
     width: 100%;
-  }
+  } /* Ensure action buttons are full width */
   .popup-icon {
     font-size: 2.5rem;
   }
@@ -714,5 +809,11 @@ footer {
   .radio-group label {
     font-size: 0.9rem;
     margin-right: 15px;
+  }
+  .accordion-header {
+    font-size: 1rem;
+  }
+  .accordion-content p {
+    font-size: 0.8rem;
   }
 }
